@@ -24,6 +24,8 @@ theme_set(theme_bw())
 ```
 
 ## Median Rent (single family residential)
+Temporal trends in median rental price of single family residential (SFR) homes
+for select cities in Denver metro area.
 
 ```{r medRentSFR}
 rentalCity <- read_csv("City_MedianRentalPrice_Sfr.csv") %>% 
@@ -56,10 +58,11 @@ ggplot(data = rentalCity %>%
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
+Chloropleth map of median rental price of SFR homes in April of 2019.
 
 ```{r mapMedRentSFR, fig.width = 8, fig.height = 8, fig.align = "center"}
 placeRent <- read_csv("City_MedianRentalPrice_Sfr.csv") %>% 
-  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-01`) %>% 
+  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-04`) %>% 
   filter(State == "CO")
 
 # Load shapefile
@@ -169,7 +172,7 @@ ggplot(data = rentalCity %>%
 
 ```{r mapMedRentSqFtSFR, fig.width = 8, fig.height = 8, fig.align = "center"}
 placeRent <- read_csv("City_MedianRentalPricePerSqft_Sfr.csv") %>% 
-  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-01`) %>% 
+  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-04`) %>% 
   filter(State == "CO")
 
 # Load shapefile
@@ -252,7 +255,7 @@ ggplot(data = rentalCity %>%
 
 ```{r mapZriSFR, fig.width = 8, fig.height = 8, fig.align = "center"}
 placeRent <- read_csv("City_Zri_SingleFamilyResidenceRental.csv") %>% 
-  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-01`) %>% 
+  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-04`) %>% 
   filter(State == "CO")
 
 # Load shapefile

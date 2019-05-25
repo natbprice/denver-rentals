@@ -7,5 +7,8 @@
 
 **Website:** <https://natbprice.github.io/denver-rentals/>
 
-Explore rental prices in Denver metro area using [Zillow
-data](https://www.zillow.com/research/data/)
+Saturday afternoon project to explore rental prices of single family
+residential homes in the Denver metro area for upcoming move. Based on
+combination of [Zillow data](https://www.zillow.com/research/data/) [US
+Census
+shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2018.html).
