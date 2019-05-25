@@ -1,0 +1,84 @@
+"0","placeRent <- read_csv(""City_MedianRentalPricePerSqft_Sfr.csv"") %>% "
+"0","  select(RegionName, State, Metro, CountyName, SizeRank, rent = `2019-01`) %>% "
+"0","  filter(State == ""CO"")"
+"2","Parsed with column specification:
+cols(
+  .default = col_double(),
+  RegionName = col_character(),
+  State = col_character(),
+  Metro = col_character(),
+  CountyName = col_character(),
+  SizeRank = col_integer()
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"0","# Load shapefile"
+"0","coloradoPlaces <- st_read(""tl_2018_08_place"") %>%"
+"0","  st_crop(xmin = -105.5, xmax = -103.5, ymin = 39, ymax = 40.5) %>% "
+"0","  left_join(placeRent, by = c(""NAME"" = ""RegionName""))"
+"1","Reading layer `"
+"1","tl_2018_08_place"
+"1","' from data source `"
+"1","C:\Users\Nat\Documents\R_Projects\denver-rentals\tl_2018_08_place"
+"1","' using driver `"
+"1","ESRI Shapefile"
+"1","'"
+"1","
+"
+"1","Simple feature collection with 458 features and 16 fields"
+"1","
+"
+"1","geometry type:  MULTIPOLYGON
+"
+"1","dimension:      XY
+"
+"1","bbox:           "
+"1","xmin: -109.0181 ymin: 37.0002 xmax: -102.0781 ymax: 40.9967"
+"1","
+"
+"1","epsg (SRID):    4269
+"
+"1","proj4string:    +proj=longlat +datum=NAD83 +no_defs
+"
+"2","although coordinates are longitude/latitude, st_intersection assumes that they are planar
+"
+"2","attribute variables are assumed to be spatially constant throughout all geometries"
+"2","Column `NAME`/`RegionName` joining factor and character vector, coercing into character vector"
+"0","# Color palette"
+"0","pal <- colorNumeric(""YlOrRd"", domain = coloradoPlaces$rent)"
+"0","# pal <- colorQuantile(""YlOrRd"", domain = coloradoPlaces$ZRI, probs = seq(0, 1, by = 0.1))"
+"0","labels <- sprintf("
+"0","  ""<strong>%s</strong><br/>Median rent (SFR): %g"","
+"0","  coloradoPlaces$NAME, coloradoPlaces$rent"
+"0",") %>% lapply(htmltools::HTML)"
+"0","# Create leaflet chloropleth"
+"0","leaflet(coloradoPlaces) %>%"
+"0","  addTiles() %>%"
+"0","  addPolygons("
+"0","    fillColor = ~ pal(rent),"
+"0","    weight = 1,"
+"0","    opacity = 1,"
+"0","    color = ""black"","
+"0","    dashArray = ""3"","
+"0","    fillOpacity = 0.7,"
+"0","    highlight = highlightOptions("
+"0","      weight = 2,"
+"0","      color = ""#666"","
+"0","      dashArray = """","
+"0","      fillOpacity = 0.7,"
+"0","      bringToFront = TRUE),"
+"0","    label = labels,"
+"0","    labelOptions = labelOptions("
+"0","      style = list(""font-weight"" = ""normal"", padding = ""3px 8px""),"
+"0","      textsize = ""15px"","
+"0","      direction = ""auto"")"
+"0","  ) %>% "
+"0","  addLegend("
+"0","    pal = pal, "
+"0","    values = ~ rent,"
+"0","    opacity = 0.7, "
+"0","    title = ""Median Rent (SFR)"","
+"0","    position = ""bottomright"")"
+"2","sf layer has inconsistent datum (+proj=longlat +datum=NAD83 +no_defs).
+Need '+proj=longlat +datum=WGS84'"

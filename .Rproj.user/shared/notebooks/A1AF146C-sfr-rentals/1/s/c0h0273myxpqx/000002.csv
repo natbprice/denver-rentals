@@ -1,0 +1,39 @@
+"0","rentalCity <- read_csv(""City_MedianRentalPricePerSqft_Sfr.csv"") %>% "
+"0","  select(RegionName, State, Metro, CountyName, SizeRank, "
+"0","         starts_with(""2016""),"
+"0","         starts_with(""2017""),"
+"0","         starts_with(""2018"")) %>% "
+"0","  filter(State == ""CO"","
+"0","         RegionName %in% c(""Denver"","
+"0","                           ""Lakewood"","
+"0","                           ""Englewood"","
+"0","                           ""Edgewater"","
+"0","                           ""Golden"","
+"0","                           ""Wheat Ridge"","
+"0","                           ""Westminster"","
+"0","                           ""West Pleasant View"")) %>% "
+"0","  gather(date, rent, `2016-01`:`2018-12`)"
+"2","Parsed with column specification:
+cols(
+  .default = col_double(),
+  RegionName = col_character(),
+  State = col_character(),
+  Metro = col_character(),
+  CountyName = col_character(),
+  SizeRank = col_integer()
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"0","ggplot(data = rentalCity %>% "
+"0","         mutate(label = if_else(date == ""2018-12"", RegionName, NA_character_)),"
+"0","       aes(x = date, y = rent, color = RegionName, group = RegionName)) +"
+"0","  geom_line() +"
+"0","  scale_x_discrete(expand = expand_scale(mult = c(0, 0.25))) +"
+"0","  geom_label_repel(aes(label = label),"
+"0","                  nudge_x = 1,"
+"0","                  na.rm = TRUE) +"
+"0","  scale_color_brewer(palette = ""Dark2"") +"
+"0","  labs(x = ""date"", y = ""median rent / sq. ft. (SFR)"") +"
+"0","  theme(legend.position = ""none"","
+"0","        axis.text.x = element_text(angle = 45, hjust = 1))"
